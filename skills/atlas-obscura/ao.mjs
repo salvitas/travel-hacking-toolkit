@@ -3,7 +3,20 @@
 // Atlas Obscura hidden gem finder
 // Uses: https://github.com/bartholomej/atlas-obscura-api
 
-import { atlasObscura } from 'atlas-obscura-api';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { existsSync } from 'fs';
+import { execSync } from 'child_process';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Auto-install dependencies on first run
+if (!existsSync(join(__dirname, 'node_modules', 'atlas-obscura-api'))) {
+  console.error('Installing atlas-obscura-api (first run only)...');
+  execSync('npm install --no-fund --no-audit', { cwd: __dirname, stdio: 'inherit' });
+}
+
+const { atlasObscura } = await import('atlas-obscura-api');
 
 const BORING_TAGS = new Set([
   'Plaques', 'Historical Markers', 'Monuments', 'Statues',
@@ -43,7 +56,7 @@ function interestScore(place) {
   return score;
 }
 
-function formatPlace(p, full = false) {
+function formatPlace(p, { full = false, images = false } = {}) {
   const out = {
     id: p.id,
     title: p.title,
@@ -55,7 +68,7 @@ function formatPlace(p, full = false) {
 
   if (p.distance_from_query) out.distance_km = p.distance_from_query;
   if (p.tags) out.tags = p.tags.map(t => t.title || t);
-  if (p.thumbnail_url) out.thumbnail = p.thumbnail_url;
+  if (images && p.thumbnail_url) out.thumbnail = p.thumbnail_url;
 
   if (full) {
     if (p.description) {
@@ -69,8 +82,8 @@ function formatPlace(p, full = false) {
         .map(d => d.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').trim())
         .filter(Boolean);
     }
-    if (p.images) out.images = p.images;
-    if (p.imageCover) out.cover_image = p.imageCover;
+    if (images && p.images) out.images = p.images;
+    if (images && p.imageCover) out.cover_image = p.imageCover;
     if (p.nearby_places?.length) {
       out.nearby = p.nearby_places.map(n => ({
         id: n.id, title: n.title, subtitle: n.subtitle
@@ -81,11 +94,11 @@ function formatPlace(p, full = false) {
   return out;
 }
 
-async function search(lat, lng, filterBoring = true) {
+async function search(lat, lng, { filterBoring = true, images = false } = {}) {
   const response = await atlasObscura.search({ lat: parseFloat(lat), lng: parseFloat(lng) });
   const results = response.results || response;
 
-  if (!filterBoring) return results.map(r => formatPlace(r));
+  if (!filterBoring) return results.map(r => formatPlace(r, { images }));
 
   // Get full details for top results to score them
   const detailed = [];
@@ -94,85 +107,89 @@ async function search(lat, lng, filterBoring = true) {
       const full = await atlasObscura.placeFull(r.id);
       const score = interestScore(full);
       if (score >= 0) {
-        detailed.push({ ...formatPlace(full, true), interest_score: score });
+        detailed.push({ ...formatPlace(full, { full: true, images }), interest_score: score });
       }
     } catch (e) {
       // Skip places that fail to load
-      detailed.push(formatPlace(r));
+      detailed.push(formatPlace(r, { images }));
     }
   }
 
   return detailed.sort((a, b) => (b.interest_score || 0) - (a.interest_score || 0));
 }
 
-async function searchQuick(lat, lng) {
+async function searchQuick(lat, lng, { images = false } = {}) {
   const response = await atlasObscura.search({ lat: parseFloat(lat), lng: parseFloat(lng) });
   const results = response.results || response;
-  return results.map(r => formatPlace(r));
+  return results.map(r => formatPlace(r, { images }));
 }
 
-async function placeDetail(id) {
+async function placeDetail(id, { images = false } = {}) {
   const place = await atlasObscura.placeFull(parseInt(id));
-  const formatted = formatPlace(place, true);
+  const formatted = formatPlace(place, { full: true, images });
   formatted.interest_score = interestScore(place);
   return formatted;
 }
 
-async function placeShort(id) {
+async function placeShort(id, { images = false } = {}) {
   const place = await atlasObscura.placeShort(parseInt(id));
-  return formatPlace(place);
+  return formatPlace(place, { images });
 }
 
 // --- CLI ---
 const [,, command, ...args] = process.argv;
+const showImages = args.includes('--images');
 
 try {
   let result;
 
   switch (command) {
     case 'search':
-      if (args.length < 2) {
-        console.error('Usage: ao.mjs search <lat> <lng> [--all]');
+      if (args.filter(a => !a.startsWith('--')).length < 2) {
+        console.error('Usage: ao.mjs search <lat> <lng> [--all] [--images]');
         process.exit(1);
       }
       if (args.includes('--all')) {
-        result = await searchQuick(args[0], args[1]);
+        result = await searchQuick(args[0], args[1], { images: showImages });
       } else {
-        result = await search(args[0], args[1]);
+        result = await search(args[0], args[1], { images: showImages });
       }
       break;
 
     case 'quick':
-      if (args.length < 2) {
-        console.error('Usage: ao.mjs quick <lat> <lng>');
+      if (args.filter(a => !a.startsWith('--')).length < 2) {
+        console.error('Usage: ao.mjs quick <lat> <lng> [--images]');
         process.exit(1);
       }
-      result = await searchQuick(args[0], args[1]);
+      result = await searchQuick(args[0], args[1], { images: showImages });
       break;
 
     case 'place':
       if (!args[0]) {
-        console.error('Usage: ao.mjs place <id>');
+        console.error('Usage: ao.mjs place <id> [--images]');
         process.exit(1);
       }
-      result = await placeDetail(args[0]);
+      result = await placeDetail(args[0], { images: showImages });
       break;
 
     case 'short':
       if (!args[0]) {
-        console.error('Usage: ao.mjs short <id>');
+        console.error('Usage: ao.mjs short <id> [--images]');
         process.exit(1);
       }
-      result = await placeShort(args[0]);
+      result = await placeShort(args[0], { images: showImages });
       break;
 
     default:
       console.error('Commands: search, quick, place, short');
-      console.error('  search <lat> <lng>        Nearby places, filtered for interesting stuff');
-      console.error('  search <lat> <lng> --all  Nearby places, unfiltered');
-      console.error('  quick <lat> <lng>         Fast nearby search (no detail fetch)');
-      console.error('  place <id>                Full place details');
-      console.error('  short <id>                Quick place summary');
+      console.error('  search <lat> <lng>           Nearby places, filtered for interesting stuff');
+      console.error('  search <lat> <lng> --all     Nearby places, unfiltered');
+      console.error('  quick <lat> <lng>            Fast nearby search (no detail fetch)');
+      console.error('  place <id>                   Full place details');
+      console.error('  short <id>                   Quick place summary');
+      console.error('');
+      console.error('Flags:');
+      console.error('  --images                     Include image URLs (excluded by default)');
       process.exit(1);
   }
 

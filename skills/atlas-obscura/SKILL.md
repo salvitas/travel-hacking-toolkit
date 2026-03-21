@@ -41,7 +41,7 @@ Common cities for trip planning. Use these with the search commands.
 
 ## Commands
 
-All commands run from the repo root. Output is JSON.
+All commands run from the repo root. Output is JSON. Image URLs are excluded by default to keep output lean. Add `--images` to any command when you need them (e.g. generating HTML pages).
 
 ### Search Nearby (Filtered)
 
@@ -56,7 +56,7 @@ Example:
 node skills/atlas-obscura/ao.mjs search 35.6762 139.6503
 ```
 
-Returns up to 20 places sorted by interest score. Each has full description, tags, images, and directions.
+Returns up to 20 places sorted by interest score. Each has full description, tags, and directions.
 
 **Timeout note:** This makes ~20 HTTP requests (one per place). Allow 30-60 seconds.
 
@@ -84,7 +84,7 @@ Get complete information for a specific place by ID.
 node skills/atlas-obscura/ao.mjs place <id>
 ```
 
-Returns: title, subtitle, full description (multi-paragraph), directions, tags, all images, nearby places, interest score.
+Returns: title, subtitle, full description (multi-paragraph), directions, tags, nearby places, interest score.
 
 ### Short Place Summary
 
@@ -92,6 +92,15 @@ Quick place lookup without the full scrape. One request.
 
 ```bash
 node skills/atlas-obscura/ao.mjs short <id>
+```
+
+### Including Images
+
+Add `--images` to any command to include thumbnail and image URLs in the output. Useful when generating HTML pages or visual reports.
+
+```bash
+node skills/atlas-obscura/ao.mjs search <lat> <lng> --images
+node skills/atlas-obscura/ao.mjs place <id> --images
 ```
 
 ## Interest Scoring
