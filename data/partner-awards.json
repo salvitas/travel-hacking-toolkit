@@ -1,9 +1,9 @@
 {
   "_meta": {
     "description": "Which loyalty programs can book which airlines for award flights. Covers alliance-based, bilateral, and cross-alliance partnerships. Use this to determine if a user can actually redeem miles on a specific airline.",
-    "last_updated": "2026-03-21",
+    "last_updated": "2026-03-31",
     "staleness_days": 90,
-    "notes": "Partner availability changes. Airlines sign and drop partnerships. Always verify on the booking program's website before committing. ITA Airways transitioning from SkyTeam to Star Alliance (first half 2026). Hawaiian Airlines joining oneworld (April 2026)."
+    "notes": "AUDITED 2026-03-31: Fixed VA SkyTeam list (was 4 airlines, now 18), VA online_booking (was false), Iberia/Qatar/Korean Air incomplete alliance lists, Oman Air added to all oneworld programs, TAROM deduped from Flying Blue, Aeroplan Citi TY removed (no direct transfer). Partner availability changes. Always verify on the booking program's website before committing."
   },
 
   "programs": {
@@ -29,7 +29,7 @@
         "star_alliance": ["ANA", "Air Canada", "Air China", "Air India", "Air New Zealand", "Asiana", "Austrian", "Avianca", "Brussels Airlines", "Copa", "Croatia Airlines", "EgyptAir", "Ethiopian", "EVA Air", "LOT Polish", "Lufthansa", "Shenzhen Airlines", "Singapore Airlines", "South African Airways", "SWISS", "TAP Portugal", "Thai Airways", "Turkish Airlines", "United"],
         "non_alliance": ["Azul", "Etihad (select routes)", "Juneyao Airlines", "Vistara"]
       },
-      "transfer_from": ["Amex MR (1:1)", "Bilt (1:1)", "Capital One (1:1)", "Chase UR (1:1)", "Citi TY (via indirect)"],
+      "transfer_from": ["Amex MR (1:1)", "Bilt (1:1)", "Capital One (1:1)", "Chase UR (1:1)"],
       "chart_type": "dynamic_with_tiers",
       "search_url": "https://www.aircanada.com/aeroplan",
       "phone": "1-888-247-2262",
@@ -41,7 +41,7 @@
       "display_name": "Virgin Atlantic Flying Club",
       "alliance": "skyteam",
       "bookable_airlines": {
-        "skyteam": ["Air France", "Delta", "KLM", "Virgin Atlantic"],
+        "skyteam": ["Aerolíneas Argentinas", "Aeromexico", "Air Europa", "Air France", "China Airlines", "China Eastern", "Delta", "Garuda Indonesia", "Kenya Airways", "KLM", "Korean Air", "Middle East Airlines", "SAS", "Saudia", "TAROM", "Vietnam Airlines", "Virgin Atlantic", "XiamenAir"],
         "cross_alliance": ["ANA (Star Alliance)"],
         "non_alliance": []
       },
@@ -49,9 +49,9 @@
       "chart_type": "fixed",
       "search_url": "https://www.virginatlantic.com",
       "phone": "1-800-365-9500",
-      "online_booking": false,
-      "online_booking_note": "ANA awards must be booked by phone. Delta/AF/KLM can be online.",
-      "notes": "THE legendary cross-alliance sweet spot. Virgin Atlantic (SkyTeam) can book ANA (Star Alliance) at dramatically lower rates than any Star Alliance program. ANA First 72.5K from West Coast, ANA Business 52.5K. Must call to book ANA."
+      "online_booking": true,
+      "online_booking_note": "SkyTeam partners bookable online. ANA (cross-alliance) must be booked by phone.",
+      "notes": "Full SkyTeam member since 2023. Can book ALL SkyTeam airlines online (including SAS for intra-Scandi). THE legendary cross-alliance sweet spot is ANA (Star Alliance) at dramatically lower rates than any Star Alliance program: ANA First 72.5K from West Coast, ANA Business 52.5K. Must call to book ANA."
     },
 
     "avianca_lifemiles": {
@@ -88,7 +88,7 @@
       "display_name": "American Airlines AAdvantage",
       "alliance": "oneworld",
       "bookable_airlines": {
-        "oneworld": ["Alaska Airlines", "American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
+        "oneworld": ["Alaska Airlines", "American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Oman Air", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
         "non_alliance": ["Etihad (bilateral)", "JetBlue (Northeast Alliance remnant)", "GOL"]
       },
       "transfer_from": ["Citi TY (1:1)"],
@@ -103,7 +103,7 @@
       "display_name": "British Airways Executive Club (Avios)",
       "alliance": "oneworld",
       "bookable_airlines": {
-        "oneworld": ["Alaska Airlines", "American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
+        "oneworld": ["Alaska Airlines", "American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Oman Air", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
         "non_alliance": ["Aer Lingus"]
       },
       "transfer_from": ["Amex MR (1:1)", "Bilt (1:1)", "Capital One (1:1)", "Chase UR (1:1)"],
@@ -118,7 +118,7 @@
       "display_name": "Iberia Plus (Avios)",
       "alliance": "oneworld",
       "bookable_airlines": {
-        "oneworld": ["American Airlines", "British Airways", "Cathay Pacific", "Finnair", "Iberia", "Japan Airlines", "Qatar Airways"],
+        "oneworld": ["Alaska Airlines", "American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Oman Air", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
         "non_alliance": ["LATAM (select routes)"]
       },
       "transfer_from": ["Amex MR (1:1)", "Bilt (1:1)", "Capital One (1:1)", "Chase UR (1:1)", "Citi TY (via BA)"],
@@ -132,7 +132,7 @@
       "display_name": "Qatar Airways Privilege Club (Avios)",
       "alliance": "oneworld",
       "bookable_airlines": {
-        "oneworld": ["American Airlines", "British Airways", "Cathay Pacific", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Qantas", "Qatar Airways", "Royal Jordanian", "SriLankan Airlines"],
+        "oneworld": ["Alaska Airlines", "American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Oman Air", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
         "non_alliance": []
       },
       "transfer_from": ["Amex MR (1:1)", "Bilt (1:1)", "Capital One (1:1)", "Chase UR (1:1)", "Citi TY (1:1)"],
@@ -147,7 +147,7 @@
       "alliance": "skyteam",
       "bookable_airlines": {
         "skyteam": ["Aerolíneas Argentinas", "Aeromexico", "Air Europa", "Air France", "China Airlines", "China Eastern", "Delta", "Garuda Indonesia", "Kenya Airways", "KLM", "Korean Air", "Middle East Airlines", "SAS", "Saudia", "TAROM", "Vietnam Airlines", "Virgin Atlantic", "XiamenAir"],
-        "non_alliance": ["TAROM"]
+        "non_alliance": []
       },
       "transfer_from": ["Amex MR (1:1)", "Bilt (1:1)", "Capital One (1:1)", "Chase UR (1:1)", "Citi TY (1:1)"],
       "chart_type": "dynamic",
@@ -161,7 +161,7 @@
       "display_name": "Korean Air SKYPASS",
       "alliance": "skyteam",
       "bookable_airlines": {
-        "skyteam": ["Aeromexico", "Air France", "China Airlines", "China Eastern", "Delta", "Garuda Indonesia", "KLM", "Korean Air", "SAS", "Vietnam Airlines", "Virgin Atlantic", "XiamenAir"],
+        "skyteam": ["Aerolíneas Argentinas", "Aeromexico", "Air Europa", "Air France", "China Airlines", "China Eastern", "Delta", "Garuda Indonesia", "Kenya Airways", "KLM", "Korean Air", "Middle East Airlines", "SAS", "Saudia", "TAROM", "Vietnam Airlines", "Virgin Atlantic", "XiamenAir"],
         "non_alliance": ["Alaska Airlines (bilateral)", "Hawaiian Airlines"]
       },
       "transfer_from": ["Chase UR (1:1)", "Citi TY (1:1)"],
@@ -177,7 +177,7 @@
       "display_name": "Alaska Airlines Mileage Plan",
       "alliance": "oneworld",
       "bookable_airlines": {
-        "oneworld": ["American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
+        "oneworld": ["Alaska Airlines", "American Airlines", "British Airways", "Cathay Pacific", "Fiji Airways", "Finnair", "Iberia", "Japan Airlines", "Malaysia Airlines", "Oman Air", "Qantas", "Qatar Airways", "Royal Air Maroc", "Royal Jordanian", "SriLankan Airlines"],
         "non_alliance": ["Aer Lingus", "Air Tahiti Nui", "Condor", "Hainan Airlines", "Icelandair", "Korean Air", "Philippine Airlines", "Porter Airlines", "Starlux Airlines"],
         "ending_soon": ["LATAM (ending October 1, 2026)"]
       },
@@ -207,14 +207,14 @@
       "display_name": "Etihad Guest",
       "alliance": "none",
       "bookable_airlines": {
-        "bilateral_partners": ["American Airlines", "Air New Zealand", "ANA", "Asiana", "China Eastern", "Garuda Indonesia", "Hainan Airlines", "Hong Kong Airlines", "Malaysia Airlines", "Air Serbia", "Royal Air Maroc"],
+        "bilateral_partners": ["American Airlines", "Air New Zealand", "ANA", "Asiana", "China Eastern", "Garuda Indonesia", "Hainan Airlines", "Hong Kong Airlines", "Malaysia Airlines", "Air Serbia", "Royal Air Maroc", "SAS"],
         "own_metal": ["Etihad Airways"]
       },
       "transfer_from": ["Amex MR (1:1)", "Bilt (1:1)", "Capital One (1:1)", "Citi TY (1:1)"],
       "chart_type": "distance_based",
       "search_url": "https://www.etihad.com",
       "online_booking": true,
-      "notes": "Not in any alliance but has excellent bilateral partners. Etihad's AA chart is often cheaper than AAdvantage's own dynamic pricing. Book AA metal through Etihad for fixed rates. Also books ANA (cross-alliance)."
+      "notes": "Not in any alliance but has excellent bilateral partners. Etihad's AA chart is often cheaper than AAdvantage's own dynamic pricing. Book AA metal through Etihad for fixed rates. Also books ANA (cross-alliance). SAS bookable via bilateral partnership (6,000 pts econ, 20,000 pts biz on intra-Scandi)."
     },
 
     "jetblue_trueblue": {
