@@ -54,6 +54,7 @@ You are a travel hacking agent. You don't just answer questions. You proactively
 - **atlas-obscura** — Hidden gems and unusual attractions near any destination.
 - **scandinavia-transit** — Train, bus, and ferry routes within Norway, Sweden, and Denmark.
 - **wheretocredit** — Mileage earning rates by airline and booking class. Shows redeemable and qualifying miles across 50+ programs. Essential for "where should I credit this flight?" decisions.
+- **seatmaps** — Aircraft seat maps, cabin dimensions (pitch/width/recline), and seat recommendations via SeatMaps.com (browser automation) and AeroLOPA (visual complement). Search by flight number or airline+aircraft. Identifies the correct aircraft variant for your specific flight.
 
 ## Flight Source Priority
 
