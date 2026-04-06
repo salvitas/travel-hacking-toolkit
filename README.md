@@ -4,6 +4,16 @@ AI-powered travel hacking with points, miles, and award flights. Drop-in skills 
 
 Ask your AI to find you a 60,000-mile business class flight to Tokyo. It'll search award availability across 25+ programs, compare against cash prices, check your loyalty balances, and tell you the best play.
 
+<p align="center">
+  <a href="https://www.star-history.com/?repos=borski%2Ftravel-hacking-toolkit&type=date&legend=top-left">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=borski/travel-hacking-toolkit&type=date&theme=dark&legend=top-left" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=borski/travel-hacking-toolkit&type=date&legend=top-left" />
+      <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=borski/travel-hacking-toolkit&type=date&legend=top-left" width="500" />
+    </picture>
+  </a>
+</p>
+
 ## Quick Start
 
 ```bash
@@ -74,6 +84,7 @@ The `--strict-mcp-config` flag tells Claude Code to load MCP servers from the co
 | **atlas-obscura** | Hidden gems near any destination | None (free) |
 | **scandinavia-transit** | Trains, buses, ferries in Norway/Sweden/Denmark | [Entur](https://developer.entur.org) + [Trafiklab](https://www.trafiklab.se) |
 | **wheretocredit** | Mileage earning rates by airline and booking class across 50+ FF programs | None (free) |
+| **seatmaps** | Aircraft seat maps, cabin dimensions, seat recommendations via SeatMaps.com + AeroLOPA | None (free, requires [agent-browser](https://github.com/AidenLiminalAI/agent-browser)) |
 
 ## How It Works
 
@@ -112,6 +123,7 @@ The core question: **"Should I burn points or pay cash?"**
 "Check my Southwest reservations for price drops"
 "Find hidden gems near Lisbon"
 "How do I get from Oslo to Bergen by train?"
+"What's the seat pitch on Air France 83 in business class?"
 ```
 
 ## Project Structure
@@ -152,6 +164,7 @@ travel-hacking-toolkit/
 │   │       ├── search_fares.py     # New flight search
 │   │       ├── check_change.py     # Logged-in price drop monitor (read-only)
 │   │       └── entrypoint.sh       # Docker entrypoint (routes search/change)
+│   ├── seatmaps/SKILL.md           # Seat maps + cabin dimensions
 │   └── scandinavia-transit/        # Nordic trains/buses/ferries
 │       └── SKILL.md
 ├── scripts/
@@ -164,6 +177,8 @@ travel-hacking-toolkit/
 - [ajimix/travel-hacking-toolkit](https://github.com/ajimix/travel-hacking-toolkit) — Fork that contributed the google-flights skill, ignav skill, market selection strategy, and markdown table output formatting
 - [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) by [@Vinyzu](https://github.com/Vinyzu) — Undetected Playwright fork that makes the Southwest skill possible
 - [美卡指南 (US Card Guide)](https://www.google.com/maps/d/viewer?mid=1HygPCP9ghtDptTNnpUpd_C507Mq_Fhec) by Scott — FHR/THC/Chase Edit hotel property data via Google My Maps KML
+- [SeatMaps.com](https://seatmaps.com) by [Quicket GmbH](https://quicket.io) — Aircraft seat maps, cabin data, seat recommendations
+- [AeroLOPA](https://www.aerolopa.com/) — Detailed to-scale aircraft seat maps with window positions
 - [Seats.aero](https://seats.aero) — Award flight availability data
 - [AwardWallet](https://awardwallet.com) — Loyalty program tracking
 - [Duffel](https://duffel.com) — Real-time flight search and booking
