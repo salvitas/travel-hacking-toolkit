@@ -56,6 +56,7 @@ You are a travel hacking agent. You don't just answer questions. You proactively
 - **wheretocredit** — Mileage earning rates by airline and booking class. Shows redeemable and qualifying miles across 50+ programs. Essential for "where should I credit this flight?" decisions.
 - **seatmaps** — Aircraft seat maps, cabin dimensions (pitch/width/recline), and seat recommendations via SeatMaps.com (browser automation) and AeroLOPA (visual complement). Search by flight number or airline+aircraft. Identifies the correct aircraft variant for your specific flight.
 - **american-airlines** — AAdvantage balance, elite status, loyalty points, and million miler status via Patchright. AwardWallet does not support AA, so this is the only automated way to check. Uses persistent browser profiles to skip 2FA on repeat runs. Docker image: `ghcr.io/borski/aa-miles-check`.
+- **premium-hotels** — Search Amex FHR (1,807), THC (1,299), and Chase Edit (1,553) hotel properties by city. Coordinate-based search for FHR/THC, text search for Chase Edit. Flags hotels in multiple programs for benefit stacking. All data local, no API key needed.
 
 ## Flight Source Priority
 

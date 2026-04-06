@@ -87,6 +87,7 @@ The `--strict-mcp-config` flag tells Claude Code to load MCP servers from the co
 | **wheretocredit** | Mileage earning rates by airline and booking class across 50+ FF programs | None (free) |
 | **seatmaps** | Aircraft seat maps, cabin dimensions, seat recommendations via SeatMaps.com + AeroLOPA | None (free, requires [agent-browser](https://github.com/AidenLiminalAI/agent-browser)) |
 | **american-airlines** | AAdvantage balance, elite status, loyalty points. AwardWallet doesn't support AA. | None (free, requires [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright). Docker support included.) |
+| **premium-hotels** | Search 4,659 Amex FHR/THC + Chase Edit hotels by city. Compare credits, find stacking opportunities. | None (free, local data) |
 
 ## How It Works
 
@@ -127,6 +128,7 @@ The core question: **"Should I burn points or pay cash?"**
 "How do I get from Oslo to Bergen by train?"
 "What's the seat pitch on Air France 83 in business class?"
 "How many AAdvantage miles do I have?"
+"Which FHR and Chase Edit hotels are in Stockholm? Any stacking opportunities?"
 ```
 
 ## Project Structure
@@ -173,6 +175,7 @@ travel-hacking-toolkit/
 │   │   ├── Dockerfile
 │   │   └── scripts/
 │   │       └── check_balance.py    # Balance + status extractor
+│   ├── premium-hotels/SKILL.md     # FHR/THC/Chase Edit hotel comparison
 │   └── scandinavia-transit/        # Nordic trains/buses/ferries
 │       └── SKILL.md
 ├── scripts/

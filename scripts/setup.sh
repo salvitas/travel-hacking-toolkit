@@ -56,9 +56,9 @@ setup_api_keys() {
   echo ""
   echo "  The 5 free MCP servers work without any keys."
   echo "  For the full experience, add at minimum:"
-  echo "    SEATS_AERO_API_KEY    Award flight search (the main event)"
-  echo "    SERPAPI_API_KEY        Cash price comparison"
-  echo "    IGNAV_API_KEY          Flight search API (free 1,000 requests at ignav.com)"
+  echo "    SEATS_AERO_API_KEY     Award flight search (the main event)"
+  echo "    DUFFEL_API_KEY_LIVE    Primary cash flight prices (search free, pay per booking)"
+  echo "    IGNAV_API_KEY          Secondary cash flight prices (1,000 free requests)"
   echo ""
 }
 
@@ -101,8 +101,9 @@ install_optional_tools() {
   echo ""
 
   if command -v docker &>/dev/null; then
-    echo "  Docker detected. Pulling pre-built Southwest image..."
-    docker pull ghcr.io/borski/sw-fares:latest 2>/dev/null && echo "  ✓ Southwest Docker image ready." || echo "  Could not pull image. You can build locally: docker build -t sw-fares skills/southwest/"
+    echo "  Docker detected. Pulling pre-built images..."
+    docker pull ghcr.io/borski/sw-fares:latest 2>/dev/null && echo "  ✓ Southwest Docker image ready." || echo "  Could not pull SW image. Build locally: docker build -t sw-fares skills/southwest/"
+    docker pull ghcr.io/borski/aa-miles-check:latest 2>/dev/null && echo "  ✓ American Airlines Docker image ready." || echo "  Could not pull AA image. Build locally: docker build -t aa-check skills/american-airlines/"
   else
     echo "  Docker not found."
     if python3 -c "import patchright" 2>/dev/null; then
